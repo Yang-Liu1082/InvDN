@@ -1,0 +1,32 @@
+name: Test_InvDN
+suffix: ~  # add suffix to saved images
+model: InvDN
+scale: 4
+crop_border: ~  # crop border when evaluation. If None(~), crop the scale pixels
+gpu_ids: [0]
+self_ensemble: True
+
+datasets:
+  test_1:  # the 1st test dataset
+    name: SIDD
+    mode: LQGTRN
+    dataroot_Noisy: '' # path to test Noisy images
+  test_2:  # the 2nd test dataset
+    name: DND
+    mode: LQGTRN
+    dataroot_Noisy: '' # path to test Noisy images
+
+#### network
+network_G:
+  which_model_G:
+    subnet_type: Resnet
+  in_nc: 3
+  out_nc: 3
+  block_num: [8, 8]
+  scale: 4
+  init: xavier
+
+
+#### path
+path:
+  pretrain_model_G: ""

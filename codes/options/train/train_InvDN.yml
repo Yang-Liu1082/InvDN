@@ -1,0 +1,88 @@
+
+#### general settings
+
+name: InvDN_ResUnit_x4
+use_tb_logger: true
+model: InvDN
+scale: 4
+gpu_ids: [0]
+
+
+#### datasets
+
+datasets:
+  train:
+    name: SIDD
+    mode: LQGTRN
+    dataroot_GT: '' # path to training Clean images
+    dataroot_Noisy: '' # path to training Noisy images
+    dataroot_LQ: ~ # path to training reference LR images, not necessary, if not provided, LR images will be generated in dataloader
+
+    use_shuffle: true
+    n_workers: 6  # per GPU
+    batch_size: 28
+    GT_size: 144
+    use_flip: true
+    use_rot: true
+    color: RGB
+
+  val:
+    name: SIDD_val
+    mode: LQGTRN
+    dataroot_GT: '' # path to validation Clean images
+    dataroot_Noisy: '' # path to validation Noisy images
+    dataroot_LQ: ~ # path to validation reference LR images, not necessary, if not provided, LR images will be generated in dataloader
+
+
+#### network structures
+
+network_G:
+  which_model_G:
+      subnet_type: Resnet
+  in_nc: 3
+  out_nc: 3
+  block_num: [8, 8]
+  scale: 4
+  init: xavier
+
+
+#### path
+
+path:
+  pretrain_model_G:
+  strict_load: true
+  resume_state: ~
+
+
+#### training settings: learning rate scheme, loss
+
+train:
+  lr_G: !!float 2e-4
+  beta1: 0.9
+  beta2: 0.999
+  niter: 600000
+  warmup_iter: -1  # no warm up
+
+  lr_scheme: MultiStepLR
+  lr_steps: [100000, 200000, 300000, 400000, 500000]
+  lr_gamma: 0.5
+
+  pixel_criterion_forw: l2
+  pixel_criterion_back: l1
+
+  manual_seed: 10
+
+  val_freq: !!float 1
+
+  lambda_fit_forw: 16.
+  lambda_rec_back: 1
+  lambda_ce_forw: 1
+  weight_decay_G: !!float 1e-8
+  gradient_clipping: 10
+
+
+#### logger
+
+logger:
+  print_freq: 1
+  save_checkpoint_freq: !!float 1
