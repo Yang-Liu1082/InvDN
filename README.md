@@ -11,16 +11,18 @@ This is the PyTorch implementation of paper: Invertible Denoising Network: A Lig
   - PyTorch == 1.0: `pip install tensorboardX`
   
 ## Dataset Preparation
-The datasets used in this paper is DND (can be downloaded here), SIDD (can be downloaded here) and RNI.
+The datasets used in this paper is DND (can be downloaded [here](https://noise.visinf.tu-darmstadt.de/)), SIDD (can be downloaded [here](https://www.eecs.yorku.ca/~kamel/sidd/)) and RNI.
 
 ## Get Started
 Training and testing codes are in ['codes/'](./codes/). Please see ['codes/README.md'](./codes/README.md) for basic usages.
+Pretrained model can be found in ['pretrained/'](./pretrained/)
 
 ## Invertible Architecture
 ![Invertible Architecture](./figures/Net_Arch_Caption.png)
 
 ## Visual Results
 ![Qualitative results on the SIDD, DND and RNI dataset](./figures/visual_results.png)
+All visual results for SIDD dataset can be found in ['results/'](./results/).
 
 ## Acknowledgement
 The code is based on [Invertible Image Rescaling](https://github.com/pkuxmq/Invertible-Image-Rescaling). 
